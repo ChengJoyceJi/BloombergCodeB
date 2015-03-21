@@ -112,23 +112,44 @@ int main() {
 	if (S.is_open()) {
 		S >> temp;
 		while (S >> temp) {
+
 			//S >> temp;
+
 			nameCol.push_back(temp);
+			cout << temp;
 			S >> temp;
 			S >> temp;
 			S >> temp;
 		}
 	}
 	S.close();
+
+	
+	cout << "gg" << endl;
+	/*Stock S1 = Stock(nameCol[0],1); Stock S2 = Stock(nameCol[1],2);
+	Stock S3 = Stock(nameCol[2],3); Stock S4 = Stock(nameCol[3],4);
+	Stock S5 = Stock(nameCol[4],5); Stock S6 = Stock(nameCol[5],6);
+	Stock S7 = Stock(nameCol[6],7); Stock S8 = Stock(nameCol[7],8);
+	Stock S9 = Stock(nameCol[8],9); Stock S10 = Stock(nameCol[9],10);*/
 		
+
 	curTime = 0;
 	time_t cur = time(0);
 	time_t last = cur;
+
 	
 	for(int l = 0; l < nameCol.size();l++) {
 		stockCol.push_back(Stock(nameCol[l],l + 1));
 	}
 	
+
+	
+	for (int i = 0; i < nameCol.size(); i++) {
+		stockCol.push_back(Stock(nameCol[i],i + 1)); 
+	}
+	
+	cout << stockCol[1].getName() << endl;
+
 	for(int n = 0;n < nameCol.size(); n++) {
 		stockCol[n].getInfo();
 	}	

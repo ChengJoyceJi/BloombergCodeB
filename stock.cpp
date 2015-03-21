@@ -111,7 +111,7 @@ void Stock::bought() {
 }
 
 void Stock::sold(int shareSold) {
-	if (shareSold == 0) {
+	if (shareSold == share) {
 		myDiv.clear();
 	}
 	share = share - shareSold;
