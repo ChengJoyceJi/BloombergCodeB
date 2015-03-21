@@ -27,6 +27,8 @@ public:
 	// bid
 	void buy(std::string stock, double price, int amount);
 	
+	void buy(std::string stock, double money);
+	
 	//ask
 	void sell(std::string stock, double price, int amount);
 	
