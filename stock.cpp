@@ -82,6 +82,34 @@ void Stock::getInfo() {
 	ORDERS.close();
 }
 
+void Stock::bought() {
+	string s = "";
+	long double mydiv = 0.0;
+	int myShare;
+	
+	system("./codeb ShakeItOff_MLC weareyoung codebb.cloudapp.net 17429 MY_SECURITIES > mysecurities.txt");
+	ifstream MYSECURITIES("mysecurities.txt");
+	if (MYSECURITIES.is_open()) {
+		while (s != name) {
+			MYSECURITIES >> S;
+		}
+		MYSECURITIES >> s;
+		istringstream s1(s);
+		s1 >> myShare;
+		share = myShare;
+		MYSECURITIES >> s;
+		istringstream ss(s);
+		ss >> mydiv;
+		myDiv.push_back(mydiv);
+	}
+	MYSECURITIES.close();
+}
+
+void Stock::sold() {
+	myDiv.clear();
+	share = 0;
+}
+
 
 
 
