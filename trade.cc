@@ -123,16 +123,11 @@ int main() {
 	
 	while (curTime < 300) {
 		if (cur != last) {
-<<<<<<< HEAD
+
 			for(int n = 0; n < 10; n++) {
 				stockCol[n].getInfo();
 			}
-			
-=======
-			for(int n = 0;n < 10; n++) {
-				stockCol[n].getInfo();
-			}
->>>>>>> origin/master
+
 			last = cur;
 			sleep(30);
 			//Transfer 100 for dividends;
