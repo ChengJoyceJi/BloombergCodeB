@@ -37,8 +37,8 @@ int highestDividend(vector<Stock> &collection) {
 	long double maxDiv = 0;
 	int maxid = 0;
 	for (int id = 0; id < 10; id++) {
-		long double divRatio = (collection[id].getdivRatio())[collection[id].getdivRatio().size()-1];
-		long double netWorth = (collection[id].getnetWorth())[collection[id].getnetWorth().size()-1];
+		long double divRatio = *(collection[id].getdivRatio().end()-1);
+		long double netWorth = *(collection[id].getnetWorth().end()-1);
 		long double divv = divRatio * netWorth;
 		if (divv > maxDiv) {
 			maxDiv = divv;
@@ -129,7 +129,8 @@ int main() {
 			}
 
 			last = cur;
-			sleep(30);
+			sleep(15);
+			cout << "cash: " << it->cash() << endl;
 			//Transfer 100 for dividends;
 			long double min_return = 0; 
 			string stockName;
