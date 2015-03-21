@@ -110,19 +110,30 @@ int main() {
 	stockCol.push_back(S4); stockCol.push_back(S9);
 	stockCol.push_back(S5); stockCol.push_back(S10);
 	
+	for(int n = 0;n < 10; n++) {
+		stockCol[n].getInfo();
+	}	
+
+	Interact* it = new Interact();
+	it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
+	it->buy("EA", 100, stockCol);   it->buy("FB", 100, stockCol);
+	it->buy("GOOG", 100, stockCol); it->buy("MSFT", 100, stockCol);
+	it->buy("SNY", 100, stockCol);  it->buy("TSLA", 100, stockCol);
+	it->buy("TWTR", 100, stockCol); it->buy("XOM", 100, stockCol);
+	
 	while (curTime < 300) {
 		if (cur != last) {
+<<<<<<< HEAD
 			for(int n = 0; n < 10; n++) {
 				stockCol[n].getInfo();
 			}
 			
+=======
+			for(int n = 0;n < 10; n++) {
+				stockCol[n].getInfo();
+			}
+>>>>>>> origin/master
 			last = cur;
-			Interact* it = new Interact();
-			it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
-			it->buy("EA", 100, stockCol);   it->buy("FB", 100, stockCol);
-			it->buy("GOOG", 100, stockCol); it->buy("MSFT", 100, stockCol);
-			it->buy("SNY", 100, stockCol);  it->buy("TSLA", 100, stockCol);
-			it->buy("TWTR", 100, stockCol); it->buy("XOM", 100, stockCol);
 			sleep(30);
 			//Transfer 100 for dividends;
 			long double min_return = 0; 
