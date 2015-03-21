@@ -13,6 +13,7 @@ class Interact {
 	std::string command;
 	
 public:	
+	
 	Interact(): username("ShakeItOff_MLC"), password("weareyoung"), host("codebb.cloudapp.net"), port("17429"), command("./codeb "){
 		command += username;
 		command += " ";
@@ -22,7 +23,10 @@ public:
 		command += " ";
 		command += port;
 		command += " ";
+		system("g++ client.m.cpp -o codeb");
 	}
+	
+	double cash();
 	
 	// bid
 	void buy(std::string stock, double price, int amount);

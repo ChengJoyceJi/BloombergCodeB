@@ -12,13 +12,19 @@
 
 using namespace std;
 
-map<string, double> divi;
-
-string highestDividend(vector<Stock> &collection) {
+/*string highestDividend(vector<Stock> &collection) {
 	
+	long double maxDivRatio;
+	vector<Stock>::iterator it;
+	for (it = collection.second.begin(); it != collection.second.end(), it++) {
+		if (it->name == stock) {
+			maxDivRatio = collection[it->id].divRatio[collection.askPrice.size()-1];
+			break;
+		}
+	}
 	
 }
-
+*/
 /*bool dividend(Interact &it, vector<Stock> &collo) {
 	time_t cur = time(0);
 	time_t last = cur;
@@ -42,6 +48,7 @@ int main() {
 	//it->sell("AAPL", 20, 10);
 	//it->clearBid("APPL");
 	//it->clearAsk("APPL");
+	cout << it->cash();
 	
 	//system("./codeb ShakeItOff_MLC weareyoung codebb.cloudapp.net 17429 SECURITIES > securities.txt");
 	

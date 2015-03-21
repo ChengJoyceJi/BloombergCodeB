@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 		command += argv[i];
 		command += " ";
 	}
-	command;
+	//command;
 
 	ss << name << " " << password << "\n" << command << "\nCLOSE_CONNECTION" << endl;
 
