@@ -82,6 +82,7 @@ void Interact::buy(std::string stock, double money, vector<Stock> &stockCol) {
 
 void Interact::sell(string stock, double price, int amount, vector<Stock> &stockCol) {
 	
+	cout << "sell price: " << price << " amount: " << amount << endl;
 	string str = command;
 	str += "ASK";
 	str += " ";
