@@ -10,6 +10,7 @@ int curTime = 0;
 
 
 class Stock {
+	int id;
 	std::string name;
 	std::vector<long double> netWorth;
 	std::vector<long double> bidPrice;
@@ -20,7 +21,7 @@ public:
 	Stock(std::string s) {name = s;}
 	~Stock() {}
 	
-	
+	int getID() {return id;}
 	std::string getName() {return name;}
 	std::vector<long double> getnetWorth() {return netWorth;}
 	std::vector<long double> getBid() {return bidPrice;} 

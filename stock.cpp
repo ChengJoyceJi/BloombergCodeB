@@ -29,11 +29,9 @@ void Stock::getInfo() {
 			SECURITIES >> s;
 		}
 		SECURITIES >> s1; // get net_worth
-		cout << "string: " << s1 << endl;
 		SECURITIES >> s2; // get dividend_ratio
 		istringstream ss1(s1);
 		ss1 >> worth;
-		cout << "number: " << worth << endl;
 		netWorth.push_back(worth);
 		istringstream ss2(s2);
 		ss2 >> dividend;
