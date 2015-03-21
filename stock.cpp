@@ -27,6 +27,7 @@ void Stock::getInfo() {
 	if (SECURITIES.is_open()) {
 		while (s != name) {
 			SECURITIES >> s;
+			cout << s << endl;
 		}
 		SECURITIES >> s1; // get net_worth
 		SECURITIES >> s2; // get dividend_ratio

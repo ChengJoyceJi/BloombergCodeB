@@ -12,11 +12,10 @@ using namespace std;
 using namespace galik;
 using namespace galik::net;
 
-Stock S1 = Stock("AAPL",1); Stock S2 = Stock("ATVI",2);
-Stock S3 = Stock("EA",3); Stock S4 = Stock("FB",4);
-Stock S5 = Stock("GOOG",5); Stock S6 = Stock("MSFT",6);
-Stock S7 = Stock("SNY",7); Stock S8 = Stock("TSLA",8);
-Stock S9 = Stock("TWTR",9); Stock S10 = Stock("XOM",10);
+
+vector<string> nameCol;
+
+
 
 vector<Stock> stockCol;
 
@@ -101,6 +100,27 @@ void sell_stock(vector<Stock> stockCol, Interact* it) {
 }
 
 int main() {
+	system("./codeb ShakeItOff_MLC weareyoung codebb.cloudapp.net 17429 SECURITIES > s.txt");
+	string temp;
+	ifstream S("s.txt");
+	if (S.is_open()) {
+		S >> temp;
+		for (int i = 0; i < 10; i++) {
+			S >> temp;
+			nameCol.push_back(temp);
+			S >> temp;
+			S >> temp;
+		}
+	}
+	S.close();
+	
+	Stock S1 = Stock(nameCol[0],1); Stock S2 = Stock(nameCol[1],2);
+	Stock S3 = Stock(nameCol[2],3); Stock S4 = Stock(nameCol[3],4);
+	Stock S5 = Stock(nameCol[4],5); Stock S6 = Stock(nameCol[5],6);
+	Stock S7 = Stock(nameCol[6],7); Stock S8 = Stock(nameCol[7],8);
+	Stock S9 = Stock(nameCol[8],9); Stock S10 = Stock(nameCol[9],10);
+		
+		
 	curTime = 0;
 	time_t cur = time(0);
 	time_t last = cur;
