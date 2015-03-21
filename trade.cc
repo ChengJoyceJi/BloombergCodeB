@@ -111,6 +111,7 @@ int main() {
 			nameCol.push_back(temp);
 			S >> temp;
 			S >> temp;
+			S >> temp;
 		}
 	}
 	S.close();
@@ -131,16 +132,17 @@ int main() {
 	stockCol.push_back(S4); stockCol.push_back(S9);
 	stockCol.push_back(S5); stockCol.push_back(S10);
 	
+	cout << stockCol[1].getName() << endl;
 	for(int n = 0;n < 10; n++) {
 		stockCol[n].getInfo();
 	}	
 
 	Interact* it = new Interact();
-	it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
-	it->buy("EA", 100, stockCol);   it->buy("FB", 100, stockCol);
-	it->buy("GOOG", 100, stockCol); it->buy("MSFT", 100, stockCol);
-	it->buy("SNY", 100, stockCol);  it->buy("TSLA", 100, stockCol);
-	it->buy("TWTR", 100, stockCol); it->buy("XOM", 100, stockCol);
+	it->buy(nameCol[0], 100, stockCol); it->buy(nameCol[1], 100, stockCol);
+	it->buy(nameCol[2], 100, stockCol);   it->buy(nameCol[3], 100, stockCol);
+	it->buy(nameCol[4], 100, stockCol); it->buy(nameCol[5], 100, stockCol);
+	it->buy(nameCol[6], 100, stockCol);  it->buy(nameCol[7], 100, stockCol);
+	it->buy(nameCol[8], 100, stockCol); it->buy(nameCol[9], 100, stockCol);
 	
 	while (curTime < 300) {
 		if (cur != last) {
