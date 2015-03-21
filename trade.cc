@@ -101,44 +101,54 @@ void sell_stock(vector<Stock> stockCol, Interact* it) {
 }
 
 int main() {
-	stockCol.push_back(S1); stockCol.push_back(S6);
-	stockCol.push_back(S2); stockCol.push_back(S7);
-	stockCol.push_back(S3); stockCol.push_back(S8);
-	stockCol.push_back(S4); stockCol.push_back(S9);
-	stockCol.push_back(S5); stockCol.push_back(S10);
-	Interact* it = new Interact();
-	it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
-	it->buy("EA", 100, stockCol);   it->buy("FB", 100, stockCol);
-	it->buy("GOOG", 100, stockCol); it->buy("MSFT", 100, stockCol);
-	it->buy("SNY", 100, stockCol);  it->buy("TSLA", 100, stockCol);
-	it->buy("TWTR", 100, stockCol); it->buy("XOM", 100, stockCol);
-	sleep(30);
-	//Transfer 100 for dividends;
-	long double min_return = 0; 
-	string stockName;
-	long double price;
-	for(int i = 0; i < 10; i++) {
-		//sell the stock when the price has decreased by a certain percentage
-		long double cur_ask_price =   *(stockCol[i].getAsk().end() - 1);
-		long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
-		long double increase_rate = (cur_ask_price - initial_bought_price) / initial_bought_price;	
-		if(i == 0) {
-			min_return = increase_rate;
-			stockName = stockCol[i].getName();
-		} else {
-			if(increase_rate < min_return) {
-				min_return = increase_rate;
-				stockName = stockCol[i].getName();
-				price = *(stockCol[i].getAsk().end() - 1);
+	curTime = time(0);
+	time_t cur = time(0);
+	time_t last = cur;
+	while (t < 300) {
+		if (cur != last) {
+			last = cur;
+			stockCol.push_back(S1); stockCol.push_back(S6);
+			stockCol.push_back(S2); stockCol.push_back(S7);
+			stockCol.push_back(S3); stockCol.push_back(S8);
+			stockCol.push_back(S4); stockCol.push_back(S9);
+			stockCol.push_back(S5); stockCol.push_back(S10);
+			Interact* it = new Interact();
+			it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
+			it->buy("EA", 100, stockCol);   it->buy("FB", 100, stockCol);
+			it->buy("GOOG", 100, stockCol); it->buy("MSFT", 100, stockCol);
+			it->buy("SNY", 100, stockCol);  it->buy("TSLA", 100, stockCol);
+			it->buy("TWTR", 100, stockCol); it->buy("XOM", 100, stockCol);
+			sleep(30);
+			//Transfer 100 for dividends;
+			long double min_return = 0; 
+			string stockName;
+			long double price;
+			for(int i = 0; i < 10; i++) {
+				//sell the stock when the price has decreased by a certain percentage
+				long double cur_ask_price =   *(stockCol[i].getAsk().end() - 1);
+				long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
+				long double increase_rate = (cur_ask_price - initial_bought_price) / initial_bought_price;	
+				if(i == 0) {
+					min_return = increase_rate;
+					stockName = stockCol[i].getName();
+				} else {
+					if(increase_rate < min_return) {
+						min_return = increase_rate;
+						stockName = stockCol[i].getName();
+						price = *(stockCol[i].getAsk().end() - 1);
+					}
+				}
 			}
+	
+			it->sell(stockName, price, 100, stockCol);
+	
+			buy_stocks(stockCol,it);
+			sell_stock(stockCol,it);
+			i++;
 		}
+		cur = time(0);
 	}
 	
-	it->sell(stockName, price, 100, stockCol);
 	
-	while(true) {
-		buy_stocks(stockCol,it);
-		sell_stock(stockCol,it);
-	}
 	
 }
