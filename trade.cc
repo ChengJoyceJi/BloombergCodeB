@@ -4,47 +4,48 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include <stock.h>
+#include "stock.h"
+#include "interact.h"
 #include <pthread.h>
 
 using namespace std;
 using namespace galik;
 using namespace galik::net;
 
-Stock S1 = new Stock("AAPL",1); Stock S2 = new Stock("ATVI",2);
-Stock S3 = new Stock("EA",3); Stock S4 = new Stock("FB",4);
-Stock S5 = new Stock("GOOG",5); Stock S6 = new Stock("MSFT",6);
-Stock S7 = new Stock("SNY",7); Stock S8 = new Stock("TSLA",8);
-Stock S9 = new Stock("TWTR",9); Stock S10 = new Stock("XOM",10);
-vector<Stock> collection;
-collection.push_back(S1); collection.push_back(S6);
-collection.push_back(S2); collection.push_back(S7);
-collection.push_back(S3); collection.push_back(S8);
-collection.push_back(S4); collection.push_back(S9);
-collection.push_back(S5); collection.push_back(S10);
+Stock S1 = Stock("AAPL",1); Stock S2 = Stock("ATVI",2);
+Stock S3 = Stock("EA",3); Stock S4 = Stock("FB",4);
+Stock S5 = Stock("GOOG",5); Stock S6 = Stock("MSFT",6);
+Stock S7 = Stock("SNY",7); Stock S8 = Stock("TSLA",8);
+Stock S9 = Stock("TWTR",9); Stock S10 = Stock("XOM",10);
+
+vector<Stock> stockCol;
+
+int curTime;
 
 string get_stockName(int i) {
+	string stockName;
 	for(int m = 0; m < 10; m ++) {
-		if(collection[m].getID() == i) {
-			stockName = collection[m].getName();
+		if(stockCol[m].getID() == i) {
+			stockName = stockCol[m].getName();
 		}
 	}
 	return stockName;
 }
 
-void buy_stocks(vector<Stock> collection, Interact* it) {
+void buy_stocks(vector<Stock> stockCol, Interact* it) {
 	for(int i = 0; i < 10; i++) {
 		//buy the stock if it keeps decreasing in three periods and suddenly start to up
-		if(collection[i].ask.size() > 16) {
-			cur_ask_price = *(collection[i].ask.end() - 1);
-			prev_ask_price_1 = *(collection[i].ask.end() - 2);
-			prev_ask_price_2 = *(collection[i].ask.end() - 4);
-			prev_ask_price_3 = *(collection[i].ask.end() - 6);
-			prev_ask_price_4 = *(collection[i].ask.end() - 8);
+		if(stockCol[i].getAsk().size() > 16) {
+			long double cur_ask_price = *(stockCol[i].getAsk().end() - 1);
+			long double prev_ask_price_1 = *(stockCol[i].getAsk().end() - 2);
+			long double prev_ask_price_2 = *(stockCol[i].getAsk().end() - 4);
+			long double prev_ask_price_3 = *(stockCol[i].getAsk().end() - 6);
+			long double prev_ask_price_4 = *(stockCol[i].getAsk().end() - 8);
 			if(prev_ask_price_1 < prev_ask_price_2 && prev_ask_price_2 < prev_ask_price_3 && 
 			   prev_ask_price_3 < prev_ask_price_4) {
 				if(cur_ask_price > prev_ask_price_1) {
-					buy(get_stockName[i], it->cash());
+					it->buy(get_stockName(i), it->cash(), stockCol);
+					stockCol[i].setboughtTime(curTime);
 				}
 			}
 		}	
@@ -52,31 +53,31 @@ void buy_stocks(vector<Stock> collection, Interact* it) {
 	}
 }
 
-void sell_stock(vector<Stock> collection, Interact* it) {
+void sell_stock(vector<Stock> stockCol, Interact* it) {
 	for(int i = 0; i < 10; i++) {
 		//sell the stock when the price has decreased by a certain percentage
-		cur_ask_price = *(collection[i].ask.end() - 1);
-		initial_bought_price = collection[i].bid[last_time_buy];
-		decrese_rate = (initial_bought_price - cur_ask_price) / initial_bought_price;
+		long double cur_ask_price = *(stockCol[i].getAsk().end() - 1);
+		long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
+		long double decrease_rate = (initial_bought_price - cur_ask_price) / initial_bought_price;
 		if(decrease_rate >= 0.1) {
-			it->sell(get_stockName[i], collection[i].getShare());
+			it->sell(get_stockName(i), *(stockCol[i].getAsk().end() - 1), stockCol[i].getShare());
 		}
 		//sell the stock when the price has increased too dramatically in the last second
-		prev_ask_price = *(collection[i].ask.end() - 2);
-		period_increase_rate = (cur_ask_price - prev_ask_price) / prev_ask_price;
+		long double prev_ask_price = *(stockCol[i].getAsk().end() - 2);
+		long double period_increase_rate = (cur_ask_price - prev_ask_price) / prev_ask_price;
 		if(period_increase_rate > 0.1) {
-			it->sell(get_stockName[i], collection[i].getShare());
+			it->sell(get_stockName(i), *(stockCol[i].getAsk().end() - 1), stockCol[i].getShare());
 		}
 		//sell the stock if it keeps increasing in three periods and suddenly start to fall
-		if(collection[i].ask.size() > 16) {
-			cur_ask_price = *(collection[i].ask.end() - 1);
-			prev_ask_price_1 = *(collection[i].ask.end() - 2);
-			prev_ask_price_2 = *(collection[i].ask.end() - 4);
-			prev_ask_price_3 = *(collection[i].ask.end() - 6);
-			prev_ask_price_4 = *(collection[i].ask.end() - 8);
+		if(stockCol[i].getAsk().size() > 16) {
+			cur_ask_price = *(stockCol[i].getAsk().end() - 1);
+			long double prev_ask_price_1 = *(stockCol[i].getAsk().end() - 2);
+			long double prev_ask_price_2 = *(stockCol[i].getAsk().end() - 4);
+			long double prev_ask_price_3 = *(stockCol[i].getAsk().end() - 6);
+			long double prev_ask_price_4 = *(stockCol[i].getAsk().end() - 8);
 			if(prev_ask_price_1 < prev_ask_price_2 && prev_ask_price_2 < prev_ask_price_3 && prev_ask_price_3 < prev_ask_price_4) {
 				if(cur_ask_price > prev_ask_price_1) {
-					sell(get_stockName[i], collection[i].getShare())
+					it->sell(get_stockName(i), *(stockCol[i].getAsk().end() - 1), stockCol[i].getShare());
 				}
 			}
 		}				
@@ -84,36 +85,44 @@ void sell_stock(vector<Stock> collection, Interact* it) {
 }
 
 int main() {
+	stockCol.push_back(S1); stockCol.push_back(S6);
+	stockCol.push_back(S2); stockCol.push_back(S7);
+	stockCol.push_back(S3); stockCol.push_back(S8);
+	stockCol.push_back(S4); stockCol.push_back(S9);
+	stockCol.push_back(S5); stockCol.push_back(S10);
 	Interact* it = new Interact();
-	it->buy("AAPL", 100); it->buy("ATVI", 100);
-	it->buy("EA", 100);   it->buy("FB", 100);
-	it->buy("GOOG", 100); it->buy("MSFT", 100);
-	it->buy("SNY", 100);  it->buy("TSLA", 100);
-	it->buy("TWTR", 100); it->buy("XOM", 100);
+	it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
+	it->buy("EA", 100, stockCol);   it->buy("FB", 100, stockCol);
+	it->buy("GOOG", 100, stockCol); it->buy("MSFT", 100, stockCol);
+	it->buy("SNY", 100, stockCol);  it->buy("TSLA", 100, stockCol);
+	it->buy("TWTR", 100, stockCol); it->buy("XOM", 100, stockCol);
 	sleep(30);
 	//Transfer 100 for dividends;
-	min_return = 0; string stockName;
+	long double min_return = 0; 
+	string stockName;
+	long double price;
 	for(int i = 0; i < 10; i++) {
 		//sell the stock when the price has decreased by a certain percentage
-		cur_ask_price =   *(collection[i].ask.end() - 1);
-		initial_bought_price = collection[i].bid[last_time_buy];
-		increase_rate = (cur_ask_price - initial_bought_price) / initial_bought_price;	
+		long double cur_ask_price =   *(stockCol[i].getAsk().end() - 1);
+		long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
+		long double increase_rate = (cur_ask_price - initial_bought_price) / initial_bought_price;	
 		if(i == 0) {
 			min_return = increase_rate;
-			stockName = collection[i].getName();
+			stockName = stockCol[i].getName();
 		} else {
 			if(increase_rate < min_return) {
 				min_return = increase_rate;
-				stockName = collection[i].getName();
+				stockName = stockCol[i].getName();
+				price = *(stockCol[i].getAsk().end() - 1);
 			}
 		}
 	}
 	
-	sell(stockName, 100)
+	it->sell(stockName, price, 100);
 	
 	while(true) {
-		buy_stocks(collection,it);
-		sell_stock(collection,it);
+		buy_stocks(stockCol,it);
+		sell_stock(stockCol,it);
 	}
 	
 }

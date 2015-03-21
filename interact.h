@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+class Stock;
 
 class Interact {
 	
@@ -32,7 +33,7 @@ public:
 	// bid
 	void buy(std::string stock, double price, int amount);
 	
-	void buy(std::string stock, double money, std::vector<Stock> &collection);
+	void buy(std::string stock, double money, std::vector<Stock> &stockCol);
 	
 	//ask
 	void sell(std::string stock, double price, int amount);

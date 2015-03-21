@@ -41,25 +41,26 @@ void Interact::buy(string stock, double price, int amount) {
 }
 
 
-void Interact::buy(std::string stock, double money, vector<Stock> &collection) {
+void Interact::buy(std::string stock, double money, vector<Stock> &stockCol) {
 	
 	long double curPrice;
 	vector<Stock>::iterator it;
-	for (it = collection.second.begin(); it != collection.second.end(), it++) {
+	for (it = stockCol.begin(); it != stockCol.end(); it++) {
 		if (it->getName() == stock) {
-			curPrice = (collection[it->getID()].getAsk())[collection[it->getID()].getAsk().size()-1];
+			curPrice = (stockCol[it->getID()].getAsk())[stockCol[it->getID()].getAsk().size()-1];
 			break;
 		}
 	}
 	
-	cout.precision(10) << curPrice << endl;
-	int amount = atoi(money/curPrice);
+	cout.precision(15);
+	cout << curPrice << endl;
+	int amount = (int)(money/curPrice);
 	string str = command;
 	str += "BID";
 	str += " ";
 	str += stock;
 	str += " ";
-	str += to_string(price);
+	str += to_string(curPrice);
 	str += " ";
 	str += to_string(amount);
 	const char* chr= str.c_str();

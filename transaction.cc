@@ -42,7 +42,7 @@ using namespace std;
 	return true;
 }*/
 
-int main() {
+/*int main() {
 	Interact* it = new Interact();
 	//it->buy("AAPL", 19.09, 20);
 	//it->sell("AAPL", 20, 10);
@@ -53,4 +53,4 @@ int main() {
 	//system("./codeb ShakeItOff_MLC weareyoung codebb.cloudapp.net 17429 SECURITIES > securities.txt");
 	
 	//dividend(it);
-}
+}*/

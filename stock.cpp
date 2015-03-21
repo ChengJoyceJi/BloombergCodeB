@@ -91,7 +91,7 @@ void Stock::bought() {
 	ifstream MYSECURITIES("mysecurities.txt");
 	if (MYSECURITIES.is_open()) {
 		while (s != name) {
-			MYSECURITIES >> S;
+			MYSECURITIES >> s;
 		}
 		MYSECURITIES >> s;
 		istringstream s1(s);

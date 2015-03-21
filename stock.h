@@ -5,12 +5,9 @@
 #include <vector>
 #include <string>
 
-int curTime = 0;
-
-
-
 class Stock {
 	int ID;
+	int boughtTime;
 	std::string name;
 	std::vector<long double> myDiv;
 	int share;
@@ -31,6 +28,10 @@ public:
 	~Stock() {}
 	
 	int getID() {return ID;}
+	
+	int getboughtTime() {return boughtTime;}
+	void setboughtTime(int x) {boughtTime = x;}
+	
 	int getShare() {return share;}
 	void setShare(int x) {share = x;}
 	std::string getName() {return name;}
