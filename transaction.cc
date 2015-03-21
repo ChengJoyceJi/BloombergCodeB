@@ -17,8 +17,8 @@ using namespace std;
 	long double maxDivRatio;
 	vector<Stock>::iterator it;
 	for (it = collection.second.begin(); it != collection.second.end(), it++) {
-		if (it->name == stock) {
-			maxDivRatio = collection[it->id].divRatio[collection.askPrice.size()-1];
+		if (it->getName() == stock) {
+			maxDivRatio = collection[it->getID()].divRatio[collection.askPrice.size()-1];
 			break;
 		}
 	}

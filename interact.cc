@@ -1,7 +1,7 @@
 #include <string>
 #include "galik_socketstream.h"
 #include "interact.h"
-//#include "stock.h"
+#include "stock.h"
 #include <cstdlib>
 #include <iostream>
 #include <stdio.h>
@@ -46,8 +46,8 @@ void Interact::buy(std::string stock, double money, vector<Stock> &collection) {
 	long double curPrice;
 	vector<Stock>::iterator it;
 	for (it = collection.second.begin(); it != collection.second.end(), it++) {
-		if (it->name == stock) {
-			curPrice = (collection[it->id].getAsk())[collection[it->id].getAsk().size()-1];
+		if (it->getName() == stock) {
+			curPrice = (collection[it->getID()].getAsk())[collection[it->getID()].getAsk().size()-1];
 			break;
 		}
 	}
