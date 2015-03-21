@@ -32,6 +32,22 @@ string get_stockName(int i) {
 	return stockName;
 }
 
+int highestDividend(vector<Stock> &collection) {
+	
+	long double maxDiv = 0;
+	int maxid = 0;
+	for (int id = 0; id < 10; id++) {
+		long double divRatio = (collection[id].getdivRatio())[collection[id].getdivRatio().size()-1];
+		long double netWorth = (collection[id].getnetWorth())[collection[id].getnetWorth().size()-1];
+		long double divv = divRatio * netWorth;
+		if (divv > maxDiv) {
+			macDiv = divv;
+			maxid = id;
+		}
+	}
+	return id;	
+}
+
 void buy_stocks(vector<Stock> stockCol, Interact* it) {
 	for(int i = 0; i < 10; i++) {
 		//buy the stock if it keeps decreasing in three periods and suddenly start to up
