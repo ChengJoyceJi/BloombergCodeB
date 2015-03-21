@@ -15,16 +15,13 @@ using namespace galik::net;
 
 
 vector<string> nameCol;
-
-
-
 vector<Stock> stockCol;
 
 int curTime;
 
 string get_stockName(int i) {
 	string stockName;
-	for(int m = 0; m < 10; m ++) {
+	for(int m = 0; m < nameCol.size(); m ++) {
 		if(stockCol[m].getID() == i) {
 			stockName = stockCol[m].getName();
 		}
@@ -36,7 +33,7 @@ int highestDividend(vector<Stock> &collection) {
 	
 	long double maxDiv = 0;
 	int maxid = 0;
-	for (int id = 0; id < 10; id++) {
+	for (int id = 0; id < nameCol.size(); id++) {
 		long double divRatio = *(collection[id].getdivRatio().end()-1);
 		long double netWorth = *(collection[id].getnetWorth().end()-1);
 		long double divv = divRatio * netWorth;
@@ -49,19 +46,21 @@ int highestDividend(vector<Stock> &collection) {
 }
 
 void buy_stocks(vector<Stock> stockCol, Interact* it) {
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i < nameCol.size(); i++) {
 		//buy the stock if it keeps decreasing in three periods and suddenly start to up
 		if(stockCol[i].getAsk().size() > 8) {
 			long double cur_ask_price = *(stockCol[i].getAsk().end() - 1);
 			long double prev_ask_price_1 = *(stockCol[i].getAsk().end() - 2);
 			long double prev_ask_price_2 = *(stockCol[i].getAsk().end() - 4);
-			long double prev_ask_price_3 = *(stockCol[i].getAsk().end() - 6);
-			long double prev_ask_price_4 = *(stockCol[i].getAsk().end() - 8);
+			long double prev_ask_price_3 = *(stockCol[i].getAsk().end() - 5);
+			long double prev_ask_price_4 = *(stockCol[i].getAsk().end() - 6);
 			if(prev_ask_price_1 < prev_ask_price_2 && prev_ask_price_2 < prev_ask_price_3 && 
 			   prev_ask_price_3 < prev_ask_price_4) {
 				if(cur_ask_price > prev_ask_price_1) {
 					it->buy(get_stockName(i), it->cash() * 0.9, stockCol);
 					stockCol[i].setboughtTime(curTime);
+					int current_shares = stockCol[i].getShare() + it->cash() * 0.9 / *(stockCol[i].getAsk().end() - 1);
+					stockCol[i].setShare(current_shares);
 				}
 			}
 		}	
@@ -70,22 +69,27 @@ void buy_stocks(vector<Stock> stockCol, Interact* it) {
 }
 
 void sell_stock(vector<Stock> stockCol, Interact* it) {
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i < nameCol.size(); i++) {
 		//sell the stock when the price has decreased by a certain percentage
 		long double cur_ask_price = *(stockCol[i].getAsk().end() - 1);
-		long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
+		long double initial_bought_price = (stockCol[i].getAsk()[stockCol[i].getboughtTime()]);
 		long double decrease_rate = (initial_bought_price - cur_ask_price) / initial_bought_price;
-		if(decrease_rate >= 0.1) {
+		if(decrease_rate >= 0.05) {
+			cout << "sell: " << stockCol[i].getShare() << endl;
 			it->sell(get_stockName(i), *(stockCol[i].getBid().end() - 1), stockCol[i].getShare(),stockCol);
+			stockCol[i].setShare(0);
 		}
 		//sell the stock when the price has increased too dramatically in the last second
-		long double prev_ask_price = *(stockCol[i].getBid().end() - 2);
+		long double prev_ask_price = *(stockCol[i].getAsk().end() - 2);
 		long double period_increase_rate = (cur_ask_price - prev_ask_price) / prev_ask_price;
-		if(period_increase_rate > 0.1) {
+		if(period_increase_rate > 0.05) {
+			cout << "sell: " << stockCol[i].getShare() << endl;
 			it->sell(get_stockName(i), *(stockCol[i].getBid().end() - 1), stockCol[i].getShare(), stockCol);
+			stockCol[i].setShare(0);
 		}
 		//sell the stock if it keeps increasing in three periods and suddenly start to fall
 		if(stockCol[i].getAsk().size() > 8) {
+			cout << "sell: " << stockCol[i].getShare() << endl;
 			cur_ask_price = *(stockCol[i].getAsk().end() - 1);
 			long double prev_ask_price_1 = *(stockCol[i].getAsk().end() - 2);
 			long double prev_ask_price_2 = *(stockCol[i].getAsk().end() - 4);
@@ -94,6 +98,7 @@ void sell_stock(vector<Stock> stockCol, Interact* it) {
 			if(prev_ask_price_1 < prev_ask_price_2 && prev_ask_price_2 < prev_ask_price_3 && prev_ask_price_3 < prev_ask_price_4) {
 				if(cur_ask_price > prev_ask_price_1) {
 					it->sell(get_stockName(i), *(stockCol[i].getBid().end() - 1), stockCol[i].getShare(), stockCol);
+					stockCol[i].setShare(0);
 				}
 			}
 		}				
@@ -106,8 +111,8 @@ int main() {
 	ifstream S("s.txt");
 	if (S.is_open()) {
 		S >> temp;
-		for (int i = 0; i < 10; i++) {
-			S >> temp;
+		while (S >> temp) {
+			//S >> temp;
 			nameCol.push_back(temp);
 			S >> temp;
 			S >> temp;
@@ -115,50 +120,42 @@ int main() {
 		}
 	}
 	S.close();
-	
-	Stock S1 = Stock(nameCol[0],1); Stock S2 = Stock(nameCol[1],2);
-	Stock S3 = Stock(nameCol[2],3); Stock S4 = Stock(nameCol[3],4);
-	Stock S5 = Stock(nameCol[4],5); Stock S6 = Stock(nameCol[5],6);
-	Stock S7 = Stock(nameCol[6],7); Stock S8 = Stock(nameCol[7],8);
-	Stock S9 = Stock(nameCol[8],9); Stock S10 = Stock(nameCol[9],10);
-		
 		
 	curTime = 0;
 	time_t cur = time(0);
 	time_t last = cur;
-	stockCol.push_back(S1); stockCol.push_back(S6);
-	stockCol.push_back(S2); stockCol.push_back(S7);
-	stockCol.push_back(S3); stockCol.push_back(S8);
-	stockCol.push_back(S4); stockCol.push_back(S9);
-	stockCol.push_back(S5); stockCol.push_back(S10);
 	
-	cout << stockCol[1].getName() << endl;
-	for(int n = 0;n < 10; n++) {
+	for(int l = 0; l < nameCol.size();l++) {
+		stockCol.push_back(Stock(nameCol[l],l + 1));
+	}
+	
+	for(int n = 0;n < nameCol.size(); n++) {
 		stockCol[n].getInfo();
 	}	
+	
 
 	Interact* it = new Interact();
-	it->buy(nameCol[0], 100, stockCol); it->buy(nameCol[1], 100, stockCol);
-	it->buy(nameCol[2], 100, stockCol);   it->buy(nameCol[3], 100, stockCol);
-	it->buy(nameCol[4], 100, stockCol); it->buy(nameCol[5], 100, stockCol);
-	it->buy(nameCol[6], 100, stockCol);  it->buy(nameCol[7], 100, stockCol);
-	it->buy(nameCol[8], 100, stockCol); it->buy(nameCol[9], 100, stockCol);
+	for(int k = 0; k < nameCol.size();k++) {
+		it->buy(nameCol[k], 100, stockCol);
+		int current_shares = 100 / *(stockCol[k].getAsk().end() - 1);
+		stockCol[k].setShare(current_shares);
+	}
 	
 	while (curTime < 300) {
 		if (cur != last) {
-
-			for(int n = 0; n < 10; n++) {
+			
+			for(int n = 0; n < nameCol.size(); n++) {
 				stockCol[n].getInfo();
 			}
 
 			last = cur;
-			sleep(15);
+			//sleep(15);
 			cout << "cash: " << it->cash() << endl;
 			//Transfer 100 for dividends;
 			long double min_return = 0; 
 			string stockName;
 			long double price;
-			for(int i = 0; i < 10; i++) {
+			for(int i = 0; i < nameCol.size(); i++) {
 				//sell the stock when the price has decreased by a certain percentage
 				long double cur_ask_price =   *(stockCol[i].getAsk().end() - 1);
 				long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
