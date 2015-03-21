@@ -35,6 +35,9 @@ int highestDividend(vector<Stock> &collection) {
 	int maxid = 0;
 	for (int id = 0; id < nameCol.size(); id++) {
 		long double divRatio = *(collection[id].getdivRatio().end()-1);
+		if (collection[id].getmyDiv().size() != 0) {
+			divRatio = *(collection[id].getmyDiv().end()-1); 
+		}
 		long double netWorth = *(collection[id].getnetWorth().end()-1);
 		long double divv = divRatio * netWorth;
 		if (divv > maxDiv) {
@@ -42,7 +45,15 @@ int highestDividend(vector<Stock> &collection) {
 			maxid = id;
 		}
 	}
-	return maxid;	
+	return maxid;
+}
+
+void buyHighDiv(vector<Stock> &collection, Interact* it) {
+	
+	int highestDivIndex = highestDividend(collection);
+	double myCash = it->cash();
+	string stock = collection[highestDivIndex].getName();
+	it->buy(stock, myCash, collection);
 }
 
 void buy_stocks(vector<Stock> stockCol, Interact* it) {
@@ -178,7 +189,7 @@ int main() {
 			long double price;
 			for(int i = 0; i < nameCol.size(); i++) {
 				//sell the stock when the price has decreased by a certain percentage
-				long double cur_ask_price =   *(stockCol[i].getAsk().end() - 1);
+				long double cur_ask_price =  *(stockCol[i].getAsk().end() - 1);
 				long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
 				long double increase_rate = (cur_ask_price - initial_bought_price) / initial_bought_price;	
 				if(i == 0) {
@@ -194,9 +205,9 @@ int main() {
 			}
 	
 			it->sell(stockName, price, 100, stockCol);
-	
-			buy_stocks(stockCol,it);
-			sell_stock(stockCol,it);
+			buyHighDiv(stockCol, it);
+			buy_stocks(stockCol, it);
+			sell_stock(stockCol, it);
 			curTime++;
 		}
 		cur = time(0);

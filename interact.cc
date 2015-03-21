@@ -55,7 +55,7 @@ void Interact::buy(std::string stock, double money, vector<Stock> &stockCol) {
 	cout << "stock: " << stock << "money: " << money << endl;
 	long double curPrice;
 	int id = 0;
-	for ( ; id < nameCol.size(); id++) {
+	for ( ; id < stockCol.size(); id++) {
 		cout << "----" << stockCol[id].getName() << endl;
 		if (stockCol[id].getName() == stock) {
 			curPrice = *(stockCol[id].getAsk().end() - 1);
