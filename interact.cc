@@ -1,6 +1,7 @@
 #include <string>
 #include "galik_socketstream.h"
 #include "interact.h"
+#include "stock.cpp"
 #include <cstdlib>
 #include <iostream>
 #include <stdio.h>
