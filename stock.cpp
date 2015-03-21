@@ -82,7 +82,7 @@ void Stock::getInfo() {
 	ORDERS.close();
 	
 	for (vector<long double>::iterator it = bidPrice.begin(); it != bidPrice.end(); it++) {
-		cout << *it << endl;
+		cout << "bid price: " << *it << endl;
 	}
 }
 

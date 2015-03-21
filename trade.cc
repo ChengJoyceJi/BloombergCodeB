@@ -111,10 +111,11 @@ int main() {
 	stockCol.push_back(S5); stockCol.push_back(S10);
 	
 	while (curTime < 300) {
-		for(int n = 0;n < 10; n++) {
-			stockCol[n].getInfo();
-		}
 		if (cur != last) {
+			for(int n = 0; n < 10; n++) {
+				stockCol[n].getInfo();
+			}
+			
 			last = cur;
 			Interact* it = new Interact();
 			it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
