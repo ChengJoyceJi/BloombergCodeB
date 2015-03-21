@@ -11,11 +11,11 @@ using namespace std;
 using namespace galik;
 using namespace galik::net;
 
-Stock S1 = new Stock("AAPL"); Stock S2 = new Stock("ATVI");
-Stock S3 = new Stock("EA"); Stock S4 = new Stock("FB");
-Stock S5 = new Stock("GOOG"); Stock S6 = new Stock("MSFT");
-Stock S7 = new Stock("SNY"); Stock S8 = new Stock("TSLA");
-Stock S9 = new Stock("TWTR"); Stock S10 = new Stock("XOM");
+Stock S1 = new Stock("AAPL",1); Stock S2 = new Stock("ATVI",2);
+Stock S3 = new Stock("EA",3); Stock S4 = new Stock("FB",4);
+Stock S5 = new Stock("GOOG",5); Stock S6 = new Stock("MSFT",6);
+Stock S7 = new Stock("SNY",7); Stock S8 = new Stock("TSLA",8);
+Stock S9 = new Stock("TWTR",9); Stock S10 = new Stock("XOM",10);
 vector<Stock> collection;
 collection.push_back(S1); collection.push_back(S6);
 collection.push_back(S2); collection.push_back(S7);
