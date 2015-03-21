@@ -104,7 +104,7 @@ int main() {
 	curTime = time(0);
 	time_t cur = time(0);
 	time_t last = cur;
-	while (t < 300) {
+	while (curTime < 300) {
 		if (cur != last) {
 			last = cur;
 			stockCol.push_back(S1); stockCol.push_back(S6);
@@ -144,7 +144,7 @@ int main() {
 	
 			buy_stocks(stockCol,it);
 			sell_stock(stockCol,it);
-			i++;
+			curTime++;
 		}
 		cur = time(0);
 	}
