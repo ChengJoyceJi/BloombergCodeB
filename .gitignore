@@ -4,3 +4,7 @@
 codeb
 
 temp_cash_amount.txt
+
+*.o
+
+run
