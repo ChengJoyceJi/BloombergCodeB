@@ -51,7 +51,7 @@ int highestDividend(vector<Stock> &collection) {
 void buy_stocks(vector<Stock> stockCol, Interact* it) {
 	for(int i = 0; i < 10; i++) {
 		//buy the stock if it keeps decreasing in three periods and suddenly start to up
-		if(stockCol[i].getAsk().size() > 16) {
+		if(stockCol[i].getAsk().size() > 8) {
 			long double cur_ask_price = *(stockCol[i].getAsk().end() - 1);
 			long double prev_ask_price_1 = *(stockCol[i].getAsk().end() - 2);
 			long double prev_ask_price_2 = *(stockCol[i].getAsk().end() - 4);
@@ -85,7 +85,7 @@ void sell_stock(vector<Stock> stockCol, Interact* it) {
 			it->sell(get_stockName(i), *(stockCol[i].getAsk().end() - 1), stockCol[i].getShare(), stockCol);
 		}
 		//sell the stock if it keeps increasing in three periods and suddenly start to fall
-		if(stockCol[i].getAsk().size() > 16) {
+		if(stockCol[i].getAsk().size() > 8) {
 			cur_ask_price = *(stockCol[i].getAsk().end() - 1);
 			long double prev_ask_price_1 = *(stockCol[i].getAsk().end() - 2);
 			long double prev_ask_price_2 = *(stockCol[i].getAsk().end() - 4);
