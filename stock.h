@@ -12,9 +12,9 @@ int curTime = 0;
 class Stock {
 	std::string name;
 	std::vector<long double> netWorth;
-	std::vector<long float> bidPrice;
-	std::vector<long float> askPrice;
-	std::vector<long float> divRatio;
+	std::vector<long double> bidPrice;
+	std::vector<long double> askPrice;
+	std::vector<long double> divRatio;
 	
 public:
 	Stock(std::string s) {name = s;}
@@ -23,9 +23,9 @@ public:
 	
 	std::string getName() {return name;}
 	std::vector<long double> getnetWorth() {return netWorth;}
-	std::vector<long float> getBid() {return bidPrice;} 
-	std::vector<long float> getAsk() {return askPrice;}
-	std::vector<long float> getdivRatio() {return divRatio;}
+	std::vector<long double> getBid() {return bidPrice;} 
+	std::vector<long double> getAsk() {return askPrice;}
+	std::vector<long double> getdivRatio() {return divRatio;}
 	
 	void getInfo();
 	
