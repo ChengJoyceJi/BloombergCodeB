@@ -76,13 +76,13 @@ void sell_stock(vector<Stock> stockCol, Interact* it) {
 		long double initial_bought_price = (stockCol[i].getBid()[stockCol[i].getboughtTime()]);
 		long double decrease_rate = (initial_bought_price - cur_ask_price) / initial_bought_price;
 		if(decrease_rate >= 0.1) {
-			it->sell(get_stockName(i), *(stockCol[i].getAsk().end() - 1), stockCol[i].getShare(),stockCol);
+			it->sell(get_stockName(i), *(stockCol[i].getBid().end() - 1), stockCol[i].getShare(),stockCol);
 		}
 		//sell the stock when the price has increased too dramatically in the last second
-		long double prev_ask_price = *(stockCol[i].getAsk().end() - 2);
+		long double prev_ask_price = *(stockCol[i].getBid().end() - 2);
 		long double period_increase_rate = (cur_ask_price - prev_ask_price) / prev_ask_price;
 		if(period_increase_rate > 0.1) {
-			it->sell(get_stockName(i), *(stockCol[i].getAsk().end() - 1), stockCol[i].getShare(), stockCol);
+			it->sell(get_stockName(i), *(stockCol[i].getBid().end() - 1), stockCol[i].getShare(), stockCol);
 		}
 		//sell the stock if it keeps increasing in three periods and suddenly start to fall
 		if(stockCol[i].getAsk().size() > 8) {
@@ -93,7 +93,7 @@ void sell_stock(vector<Stock> stockCol, Interact* it) {
 			long double prev_ask_price_4 = *(stockCol[i].getAsk().end() - 8);
 			if(prev_ask_price_1 < prev_ask_price_2 && prev_ask_price_2 < prev_ask_price_3 && prev_ask_price_3 < prev_ask_price_4) {
 				if(cur_ask_price > prev_ask_price_1) {
-					it->sell(get_stockName(i), *(stockCol[i].getAsk().end() - 1), stockCol[i].getShare(), stockCol);
+					it->sell(get_stockName(i), *(stockCol[i].getBid().end() - 1), stockCol[i].getShare(), stockCol);
 				}
 			}
 		}				
