@@ -101,17 +101,20 @@ void sell_stock(vector<Stock> stockCol, Interact* it) {
 }
 
 int main() {
-	curTime = time(0);
+	curTime = 0;
 	time_t cur = time(0);
 	time_t last = cur;
+	stockCol.push_back(S1); stockCol.push_back(S6);
+	stockCol.push_back(S2); stockCol.push_back(S7);
+	stockCol.push_back(S3); stockCol.push_back(S8);
+	stockCol.push_back(S4); stockCol.push_back(S9);
+	stockCol.push_back(S5); stockCol.push_back(S10);
 	while (curTime < 300) {
+		for(int n = 0;n < 10; n++) {
+			stockCol[n].getInfo();
+		}
 		if (cur != last) {
 			last = cur;
-			stockCol.push_back(S1); stockCol.push_back(S6);
-			stockCol.push_back(S2); stockCol.push_back(S7);
-			stockCol.push_back(S3); stockCol.push_back(S8);
-			stockCol.push_back(S4); stockCol.push_back(S9);
-			stockCol.push_back(S5); stockCol.push_back(S10);
 			Interact* it = new Interact();
 			it->buy("AAPL", 100, stockCol); it->buy("ATVI", 100, stockCol);
 			it->buy("EA", 100, stockCol);   it->buy("FB", 100, stockCol);
