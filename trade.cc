@@ -109,6 +109,7 @@ int main() {
 	stockCol.push_back(S3); stockCol.push_back(S8);
 	stockCol.push_back(S4); stockCol.push_back(S9);
 	stockCol.push_back(S5); stockCol.push_back(S10);
+	
 	while (curTime < 300) {
 		for(int n = 0;n < 10; n++) {
 			stockCol[n].getInfo();
@@ -151,7 +152,5 @@ int main() {
 		}
 		cur = time(0);
 	}
-	
-	
-	
+
 }
