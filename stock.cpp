@@ -82,39 +82,7 @@ void Stock::getInfo() {
 	ORDERS.close();
 }
 
-void Stock::bought() {
-	string s = "";
-	long double mydiv = 0.0;
-	
-	system("./codeb ShakeItOff_MLC weareyoung codebb.cloudapp.net 17429 MY_SECURITIES > mysecurities.txt");
-	ifstream MYSECURITIES("mysecurities.txt");
-	if (MYSECURITIES.is_open()) {
-		while (s != name) {
-			MYSECURITIES >> S;
-		}
-		MYSECURITIES >> s;
-		MYSECURITIES >> s;
-		istringstream ss(s);
-		ss >> mydiv;
-		myDiv.push_back(mydiv);
-	}
-	MYSECURITIES.close();
-}
 
-void Stock::sold() {
-	myDiv.clear();
-	share = 0;
-}
-
-
-int main() {
-	cout.precision(15);
-	Stock AAPL = Stock("AAPL");
-	AAPL.getInfo();
-	for (vector<long double>::iterator it = AAPL.getnetWorth().begin(); it != AAPL.getnetWorth().end(); it++) {
-		cout << *it << endl;
-	}
-}
 
 
 
