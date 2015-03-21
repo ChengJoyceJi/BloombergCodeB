@@ -18,6 +18,9 @@ class Stock {
 	
 public:
 	Stock(std::string s) {name = s;}
+	~Stock() {}
+	
+	
 	std::string getName() {return name;}
 	std::vector<long double> getnetWorth() {return netWorth;}
 	std::vector<long float> getBid() {return bidPrice;} 
