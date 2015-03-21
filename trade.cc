@@ -7,6 +7,7 @@
 #include "stock.h"
 #include "interact.h"
 #include <pthread.h>
+#include <fstream>
 
 using namespace std;
 using namespace galik;
