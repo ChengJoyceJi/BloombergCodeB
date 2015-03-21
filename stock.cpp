@@ -64,7 +64,7 @@ void Stock::getInfo() {
 			istringstream ss(s);
 			int x;
 			ss >> x;
-			if (x < ask) {ask = x;}
+			ask = x;
 		}
 		while (ORDERS >> s) {
 			if (s == "ASK") {
@@ -81,8 +81,8 @@ void Stock::getInfo() {
 	}
 	ORDERS.close();
 	
-	for (vector<long double>::iterator it = bidPrice.begin(); it != bidPrice.end(); it++) {
-		cout << "bid price: " << *it << endl;
+	for (vector<long double>::iterator it = askPrice.begin(); it != askPrice.end(); it++) {
+		cout << "ask price: " << *it << endl;
 	}
 }
 
