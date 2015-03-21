@@ -17,7 +17,6 @@ double Interact::cash() {
 	outputfile.open("temp_cash_amount.txt", fstream::out | fstream::trunc);
 	string str = command;
 	str += "MY_CASH > temp_cash_amount.txt";
-	cout << str << endl;
 	const char* chr= str.c_str();
 	system(chr);
 	ifstream myfile("temp_cash_amount.txt");
@@ -42,13 +41,13 @@ void Interact::buy(string stock, double price, int amount) {
 }
 
 
-/*void Interact::buy(std::string stock, double money, vector<Stock> &collection) {
+void Interact::buy(std::string stock, double money, vector<Stock> &collection) {
 	
 	long double curPrice;
 	vector<Stock>::iterator it;
 	for (it = collection.second.begin(); it != collection.second.end(), it++) {
 		if (it->name == stock) {
-			curPrice = collection[it->id].askPrice[collection.askPrice.size()-1];
+			curPrice = (collection[it->id].getAsk())[collection[it->id].getAsk().size()-1];
 			break;
 		}
 	}
@@ -65,7 +64,7 @@ void Interact::buy(string stock, double price, int amount) {
 	str += to_string(amount);
 	const char* chr= str.c_str();
 	system(chr);
-}*/
+}
 
 void Interact::sell(string stock, double price, int amount) {
 	
