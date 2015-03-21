@@ -12,7 +12,7 @@
 
 using namespace std;
 
-/*string highestDividend(vector<Stock> &collection) {
+string highestDividend(vector<Stock> &collection) {
 	
 	long double maxDivRatio;
 	vector<Stock>::iterator it;
@@ -21,10 +21,9 @@ using namespace std;
 			maxDivRatio = collection[it->getID()].divRatio[collection.askPrice.size()-1];
 			break;
 		}
-	}
-	
+	}	
 }
-*/
+
 /*bool dividend(Interact &it, vector<Stock> &collo) {
 	time_t cur = time(0);
 	time_t last = cur;

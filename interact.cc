@@ -26,7 +26,7 @@ double Interact::cash() {
 	return cash;
 }
 
-void Interact::buy(string stock, double price, int amount) {
+void Interact::buy(string stock, double price, int amount, vector<Stock> &stockCol) {
 	
 	string str = command;
 	str += "BID";
@@ -38,6 +38,14 @@ void Interact::buy(string stock, double price, int amount) {
 	str += to_string(amount);
 	const char* chr= str.c_str();
 	system(chr);	
+	int id = 0;
+	for (it = stockCol.begin(); it != stockCol.end(); it++) {
+		if (it->getName() == stock) {
+			id = it->getID();
+			break;
+		}
+	}
+	(stockCol[id]).bought();
 }
 
 
@@ -45,9 +53,11 @@ void Interact::buy(std::string stock, double money, vector<Stock> &stockCol) {
 	
 	long double curPrice;
 	vector<Stock>::iterator it;
+	int id = 0;
 	for (it = stockCol.begin(); it != stockCol.end(); it++) {
 		if (it->getName() == stock) {
-			curPrice = (stockCol[it->getID()].getAsk())[stockCol[it->getID()].getAsk().size()-1];
+			id = it->getID();
+			curPrice = (stockCol[id].getAsk())[stockCol[id].getAsk().size()-1];
 			break;
 		}
 	}
@@ -65,9 +75,10 @@ void Interact::buy(std::string stock, double money, vector<Stock> &stockCol) {
 	str += to_string(amount);
 	const char* chr= str.c_str();
 	system(chr);
+	(stockCol[id]).bought();
 }
 
-void Interact::sell(string stock, double price, int amount) {
+void Interact::sell(string stock, double price, int amount, vector<Stock> &stockCol) {
 	
 	string str = command;
 	str += "ASK";
@@ -79,6 +90,15 @@ void Interact::sell(string stock, double price, int amount) {
 	str += to_string(amount);
 	const char* chr= str.c_str();
 	system(chr);
+	vector<Stock>::iterator it;
+	int id = 0;
+	for (it = stockCol.begin(); it != stockCol.end(); it++) {
+		if (it->getName() == stock) {
+			id = it->getID();
+			break;
+		}
+	}
+	(stockCol[id]).sold();
 }
 
 void Interact::clearBid(string stock) {
