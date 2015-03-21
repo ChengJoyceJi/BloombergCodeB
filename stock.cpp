@@ -105,9 +105,11 @@ void Stock::bought() {
 	MYSECURITIES.close();
 }
 
-void Stock::sold() {
-	myDiv.clear();
-	share = 0;
+void Stock::sold(int shareSold) {
+	if (shareSold == 0) {
+		myDiv.clear();
+	}
+	share = share - shareSold;
 }
 
 

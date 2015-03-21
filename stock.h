@@ -47,7 +47,7 @@ public:
 	
 	void bought();
 	
-	void sold();
+	void sold(int shareSold);
 };
 
 #endif

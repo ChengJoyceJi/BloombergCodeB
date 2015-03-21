@@ -41,11 +41,11 @@ int highestDividend(vector<Stock> &collection) {
 		long double netWorth = (collection[id].getnetWorth())[collection[id].getnetWorth().size()-1];
 		long double divv = divRatio * netWorth;
 		if (divv > maxDiv) {
-			macDiv = divv;
+			maxDiv = divv;
 			maxid = id;
 		}
 	}
-	return id;	
+	return maxid;	
 }
 
 void buy_stocks(vector<Stock> stockCol, Interact* it) {

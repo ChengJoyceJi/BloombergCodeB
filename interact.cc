@@ -39,6 +39,7 @@ void Interact::buy(string stock, double price, int amount, vector<Stock> &stockC
 	const char* chr= str.c_str();
 	system(chr);	
 	int id = 0;
+	vector<Stock>::iterator it;
 	for (it = stockCol.begin(); it != stockCol.end(); it++) {
 		if (it->getName() == stock) {
 			id = it->getID();
@@ -98,7 +99,7 @@ void Interact::sell(string stock, double price, int amount, vector<Stock> &stock
 			break;
 		}
 	}
-	(stockCol[id]).sold();
+	(stockCol[id]).sold(amount);
 }
 
 void Interact::clearBid(string stock) {
