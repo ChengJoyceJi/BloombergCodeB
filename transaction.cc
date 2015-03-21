@@ -12,19 +12,23 @@
 
 using namespace std;
 
-string highestDividend(vector<Stock> &collection) {
+int highestDividend(vector<Stock> &collection) {
 	
-	long double maxDivRatio;
-	vector<Stock>::iterator it;
-	for (it = collection.second.begin(); it != collection.second.end(), it++) {
-		if (it->getName() == stock) {
-			maxDivRatio = collection[it->getID()].divRatio[collection.askPrice.size()-1];
-			break;
+	long double maxDiv = 0;
+	int maxid = 0;
+	for (int id = 0; id < 10; id++) {
+		long double divRatio = (collection[id].getdivRatio())[collection[id].getdivRatio().size()-1];
+		long double netWorth = (collection[id].getnetWorth())[collection[id].getnetWorth().size()-1];
+		long double divv = divRatio * netWorth;
+		if (divv > maxDiv) {
+			macDiv = divv;
+			maxid = id;
 		}
-	}	
+	}
+	return id;	
 }
 
-/*bool dividend(Interact &it, vector<Stock> &collo) {
+bool dividend(Interact &it, vector<Stock> &collection) {
 	time_t cur = time(0);
 	time_t last = cur;
 	
@@ -39,7 +43,7 @@ string highestDividend(vector<Stock> &collection) {
 		cur = time(0);
 	}
 	return true;
-}*/
+}
 
 /*int main() {
 	Interact* it = new Interact();
